@@ -70,8 +70,8 @@ public class SendMail
 
 			message.setContent(multipart );    
 			Transport.send(message);
-			System.out.println("Done,Investment of "+activity+" in year "+year+" is "+data+" you should have received an email with the requested data. Please confirm?");
-			return "Done,Investment of "+activity+" in year "+year+" is "+data+" you should have received an email with the requested data. Please confirm?";
+			System.out.println("Done,Investment of UAE in year "+year+" is "+data+" you should have received an email with the requested data. Please confirm?");
+			return "Done,Investment of UAE in year "+year+" is "+data+" you should have received an email with the requested data. Please confirm?";
 
 		}catch (MessagingException ex) {ex.printStackTrace();}  
 

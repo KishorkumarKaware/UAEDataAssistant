@@ -102,8 +102,9 @@ public class GetGDP {
 		}
 		System.out.println("Email="+email);
 		if(email != null && matchFound == true){
+			
 			EmailStructure e=new EmailStructure();
-			e.setActivity(gdpfromExcel);
+			e.setActivity("UAE");
 			e.setEmail(email);
 			e.setInvestment(result2);
 			e.setYear(year);
@@ -125,7 +126,7 @@ public class GetGDP {
 		switch (cell.getCellType()) 
 		{
 		case HSSFCell.CELL_TYPE_NUMERIC:
-			result = Integer.valueOf( (int) cell.getNumericCellValue()).toString();
+			result = Float.valueOf( (float) cell.getNumericCellValue()).toString();
 			break;
 
 		case HSSFCell.CELL_TYPE_STRING:
