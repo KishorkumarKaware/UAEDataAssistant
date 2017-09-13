@@ -1,15 +1,36 @@
 package com.boot.model;
 
+import java.util.Arrays;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Parameters {
 	private String email;
 
-    private String year;
+	 private String[] sector;
+    
+    private String[] year;
 
-    private String activity;
+    private String table;
 
+    public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
+	}
+
+    public String[] getYear ()
+    {
+        return year;
+    }
+
+    public void setYear (String[] year)
+    {
+        this.year = year;
+    }
     public String getEmail ()
     {
         return email;
@@ -20,29 +41,21 @@ public class Parameters {
         this.email = email;
     }
 
-    public String getYear ()
+    public String[] getSector ()
     {
-        return year;
+        return sector;
     }
 
-    public void setYear (String year)
+    public void setSector (String[] sector)
     {
-        this.year = year;
+        this.sector = sector;
     }
 
-    public String getActivity ()
-    {
-        return activity;
-    }
 
-    public void setActivity (String activity)
-    {
-        this.activity = activity;
-    }
+	@Override
+	public String toString() {
+		return "Parameters [email=" + email + ", sector=" + sector + ", year=" + Arrays.toString(year) + ", table="
+				+ table + "]";
+	}
 
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [email = "+email+", year = "+year+", activity = "+activity+"]";
-    }
 }

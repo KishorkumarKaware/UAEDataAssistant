@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<stateMachine>
+	<tanantInfo>
+		<orgCode>TENANT1</orgCode>
+		<userId>Vaibhav Wagh</userId>
+		<source>AutomationEdge Facebook Chatbot</source>
+		<sourceId>null</sourceId>
+		<responseMailSubject>null</responseMailSubject>
+		<url>http://10.41.16.97:8080/aeengine/rest/</url>
+	</tanantInfo>
+	
+	<states>
+		<state>
+			<id>Start</id>
+			<description>Start</description>
+			<attribute>
+				<type>local</type> <!-- local or ae -->
+				<name></name>
+				<alias></alias><!-- AE param name -->
+				<valueType>String</valueType>
+			</attribute>			
+			<botResponse></botResponse>
+			<transitions>
+				<transition>
+					<from>Start</from>
+					<input>String</input>
+					<to>Ready for conversation</to>
+				</transition>
+			</transitions>
+		</state>
+		
+		<state>
+			<id>Ready for conversation</id>
+			<description>Ready for conversation</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Greeting, Please Select a) For Check AE Request Status b) For Addition of Two Numbers</botResponse>
+			<transitions>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>a</input>
+					<to>Check Status OTP</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>b</input>
+					<to>Addition of Two Numbers OTP</to>
+				</transition>
+			</transitions>
+		</state>
+		
+		<state>
+			<id>Check Status OTP</id>
+			<description>Check Status OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status OTP</from>
+					<input>Integer</input>
+					<to>Check Status Request ID</to>
+				</transition>
+			</transitions>			
+		</state>
+
+		<state>
+			<id>Check Status Request ID</id>
+			<description>Check Status Request ID</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>requestId</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter AE Request ID</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status Request ID</from>
+					<input>String</input>
+					<to>Check Status Complete</to>
+				</transition>
+			</transitions>		
+		</state>
+
+		<state>
+			<id>Check Status Complete</id>
+			<description>Check Status Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>Request ID-</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>	
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>check status</workflowName>
+			</action>
+		</state>
+
+
+		<state>
+			<id>Addition of Two Numbers OTP</id>
+			<description>Addition of Two Numbers OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Addition of Two Numbers OTP</from>
+					<input>Integer</input>
+					<to>Addition First Number</to>
+				</transition>
+			</transitions>			
+		</state>	
+
+		<state>
+			<id>Addition First Number</id>
+			<description>Addition First Number</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>param1</alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>Enter First Number</botResponse>
+			<transitions>
+				<transition>
+					<from>Addition First Number</from>
+					<input>Integer</input>
+					<to>Addition Second Number</to>
+				</transition>
+			</transitions>			
+		</state>
+		
+		<state>
+			<id>Addition Second Number</id>
+			<description>Addition Second Number</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>param2</alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>Enter Second Number</botResponse>
+			<transitions>
+				<transition>
+					<from>Addition Second Number</from>
+					<input>Integer</input>
+					<to>Addition of Two Numbers complete</to>
+				</transition>
+			</transitions>			
+		</state>
+		
+		<state>
+			<id>Addition of Two Numbers complete</id>
+			<description>Addition of Two Numbers complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>We have received your request. Your request id is- </botResponse>
+			<transitions>
+				<transition>
+					<from>Addition of Two Numbers</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>Add Two Numbers - Without Scripts</workflowName>
+			</action>
+		</state>
+	</states>
+</stateMachine>

@@ -1,5 +1,7 @@
 package com.boot.model;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Messages
 {
     private String speech;

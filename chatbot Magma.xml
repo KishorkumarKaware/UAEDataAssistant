@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<stateMachine>
+	<tanantInfo>
+		<orgCode>TENANT1</orgCode>
+		<userId>Vaibhav Wagh</userId>
+		<source>AutomationEdge Facebook Chatbot</source>
+		<sourceId>null</sourceId>
+		<responseMailSubject>null</responseMailSubject>
+		<url>http://10.41.16.97:8080/aeengine/rest/</url>
+	</tanantInfo>
+	
+	<states>
+		<state>
+			<id>Start</id>
+			<description>Start</description>
+			<attribute>
+				<type>local</type> <!-- local or ae -->
+				<name></name>
+				<alias></alias><!-- AE param name -->
+				<valueType>String</valueType>
+			</attribute>			
+			<botResponse></botResponse>
+			<transitions>
+				<transition>
+					<from>Start</from>
+					<input>String</input>
+					<to>Ready for conversation</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Ready for conversation</id>
+			<description>Ready for conversation</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Hello, Thank you for connecting to Magma. Are you a Magma employee? Yes/No</botResponse>
+			<transitions>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>Yes</input>
+					<to>Provide Options</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>No</input>
+					<to>Start</to>
+				</transition>
+			</transitions>	
+		</state>
+		
+		<state>
+			<id>Provide Options</id>
+			<description>Provide Options</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>Welcome to mBuddy - Magma IT Helpdesk chatbot. Please Select a) For AD password reset b) For Account unlock</botResponse>
+			<transitions>
+				<transition>
+					<from>Provide Options</from>
+					<input>a</input>
+					<to>AD password reset SAM</to>
+				</transition>
+				<transition>
+					<from>Provide Options</from>
+					<input>b</input>
+					<to>Account unlock SAM</to>
+				</transition>
+			</transitions>	
+		</state>		
+		
+		<state>
+			<id>AD password reset SAM</id>
+			<description>AD password reset SAM</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>SamName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter SAM Name</botResponse>
+			<transitions>
+				<transition>
+					<from>AD password reset SAM</from>
+					<input>String</input>
+					<to>AD password reset OTP</to>
+				</transition>
+			</transitions>	
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>SendOTP</workflowName>
+			</action>
+		</state>
+		
+		<state>
+			<id>AD password reset OTP</id>
+			<description>AD password reset OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>I need your authentication before processing your request. Please provide OTP sent to your registered mobile number.</botResponse>
+			<transitions>
+				<transition>
+					<from>AD password reset OTP</from>
+					<input>Integer</input>
+					<to>AD password reset Complete</to>
+				</transition>
+			</transitions>
+		</state>
+		
+		<state>
+			<id>AD password reset Complete</id>
+			<description>AD password reset Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>Wait, we are processing your request. Your request id is-</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>AD Reset Password</workflowName>
+			</action>
+		</state>
+		
+		<state>
+			<id>Account unlock SAM</id>
+			<description>Account unlock SAM</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>SamName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter SAM Name</botResponse>
+			<transitions>
+				<transition>
+					<from>AD password reset SAM</from>
+					<input>String</input>
+					<to>Account unlock OTP</to>
+				</transition>
+			</transitions>	
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>SendOTP</workflowName>
+			</action>
+		</state>
+		
+		<state>
+			<id>Account unlock OTP</id>
+			<description>Account unlock OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>I need your authentication before processing your request. Please provide OTP sent to your registered mobile number.</botResponse>
+			<transitions>
+				<transition>
+					<from>Account unlock OTP</from>
+					<input>Integer</input>
+					<to>Account unlock Complete</to>
+				</transition>
+			</transitions>
+		</state>
+		
+		<state>
+			<id>Account unlock Complete</id>
+			<description>Account unlock Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>Wait, we are processing your request. Your request id is-</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>AD Unlock Account</workflowName>
+			</action>
+		</state>
+	</states>
+</stateMachine>

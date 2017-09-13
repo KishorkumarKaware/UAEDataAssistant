@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<stateMachine>
+	<tanantInfo>
+		<orgCode>TENANT1</orgCode>
+		<userId>Vaibhav Wagh</userId>
+		<source>AutomationEdge Facebook Chatbot</source>
+		<sourceId>null</sourceId>
+		<responseMailSubject>null</responseMailSubject>
+		<url>http://10.41.16.97:8080/aeengine/rest/</url>
+	</tanantInfo>
+	
+	<states>
+		<state>
+			<id>Start</id>
+			<description>Start</description>
+			<attribute>
+				<type>local</type> <!-- local or ae -->
+				<name></name>
+				<alias></alias><!-- AE param name -->
+				<valueType>String</valueType>
+			</attribute>			
+			<botResponse></botResponse>
+			<transitions>
+				<transition>
+					<from>Start</from>
+					<input>String</input>
+					<to>Ready for conversation</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Ready for conversation</id>
+			<description>Ready for conversation</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Greeting, a) Create Azure AD Account b) Disable Azure AD Account c) Reset Password Azure AD User d) Check Status e) Addition of Two Numbers</botResponse>
+			<transitions>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>a</input>
+					<to>Create AD Account OTP</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>b</input>
+					<to>Disable AD Account OTP</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>c</input>
+					<to>Reset Password AD User OTP</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>d</input>
+					<to>Check Status OTP</to>
+				</transition>
+				<transition>
+					<from>Ready for conversation</from>
+					<input>e</input>
+					<to>Addition First Number</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account OTP</id>
+			<description>Create AD Account OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account OTP</from>
+					<input>Integer</input>
+					<to>Create AD Account Admin User Name</to>
+				</transition>
+			</transitions>	
+		</state>
+		
+		<state>
+			<id>Create AD Account Admin User Name</id>
+			<description>Create AD Account Admin User Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminUserName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin User Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Admin User Name</from>
+					<input>String</input>
+					<to>Create AD Account Admin Password</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account Admin Password</id>
+			<description>Create AD Account Admin Password</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminPassword</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin Password</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Admin Password</from>
+					<input>String</input>
+					<to>Create AD Account First Name</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account First Name</id>
+			<description>Create AD Account First Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>firstName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter First Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account First Name</from>
+					<input>String</input>
+					<to>Create AD Account Last Name</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account Last Name</id>
+			<description>Create AD Account Last Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>lastName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Last Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Last Name</from>
+					<input>String</input>
+					<to>Create AD Account Domain Name</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account Domain Name</id>
+			<description>Create AD Account Domain Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>domainName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Domain Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Domain Name</from>
+					<input>String</input>
+					<to>Create AD Account Complete</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Create AD Account Complete</id>
+			<description>Create AD Account Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>We have received your request. Your request id is-</botResponse>
+			<transitions>
+				<transition>
+					<from>Create AD Account Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>Azure AD Create Account</workflowName>
+			</action>
+		</state>
+		<state>
+			<id>Disable AD Account OTP</id>
+			<description>Disable AD Account OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias>adminUserName</alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Disable AD Account OTP</from>
+					<input>Integer</input>
+					<to>Disable AD Account Admin User Name</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Disable AD Account Admin User Name</id>
+			<description>Disable AD Account Admin User Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminUserName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin User Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Disable AD Account Admin User Name</from>
+					<input>String</input>
+					<to>Disable AD Account Admin Password</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Disable AD Account Admin Password</id>
+			<description>Disable AD Account Admin Password</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminPassword</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin Password</botResponse>
+			<transitions>
+				<transition>
+					<from>Disable AD Account Admin Password</from>
+					<input>String</input>
+					<to>Disable AD Account Email ID</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Disable AD Account Email ID</id>
+			<description>Disable AD Account Email ID</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>email</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Email ID</botResponse>
+			<transitions>
+				<transition>
+					<from>Disable AD Account Email ID</from>
+					<input>String</input>
+					<to>Disable AD Account Complete</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Disable AD Account Complete</id>
+			<description>Disable AD Account Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>We have received your request. Your request id is-</botResponse>
+			<transitions>
+				<transition>
+					<from>Disable AD Account Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+				<action>
+					<methodType>POST</methodType>
+					<workflowName>Azure AD Disable Account</workflowName>
+				</action>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Reset Password AD User OTP</id>
+			<description>Reset Password AD User OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Reset Password AD User OTP</from>
+					<input>Integer</input>
+					<to>Reset Password AD User Name</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Reset Password AD User Name</id>
+			<description>Reset Password AD User Name</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminUserName</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin User Name</botResponse>
+			<transitions>
+				<transition>
+					<from>Reset Password AD User Name</from>
+					<input>String</input>
+					<to>Reset Password AD User Password</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Reset Password AD User Password</id>
+			<description>Reset Password AD User Password</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>adminPassword</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Admin Password</botResponse>
+			<transitions>
+				<transition>
+					<from>Reset Password AD User Password</from>
+					<input>String</input>
+					<to>Reset Password AD User Email ID</to>
+				</transition>
+			</transitions>
+			
+		</state>
+		<state>
+			<id>Reset Password AD User Email ID</id>
+			<description>Reset Password AD User Email ID</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>email</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Email ID</botResponse>
+			<transitions>
+				<transition>
+					<from>Reset Password AD User Email ID</from>
+					<input>String</input>
+					<to>Reset Password AD User Complete</to>
+				</transition>
+			</transitions>
+			
+		</state>
+
+		<state>
+			<id>Reset Password AD User Complete</id>
+			<description>Reset Password AD User Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>We have received your request. Your request id is- </botResponse>
+			<transitions>
+				<transition>
+					<from>Reset Password AD User Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>Azure AD User Reset Password</workflowName>
+			</action>
+		</state>
+
+		<state>
+			<id>Check Status OTP</id>
+			<description>Check Status OTP</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<otpRequired>true</otpRequired>
+			<botResponse>Enter OTP</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status OTP</from>
+					<input>Integer</input>
+					<to>Check Status Request ID</to>
+				</transition>
+			</transitions>			
+		</state>
+
+		<state>
+			<id>Check Status Request ID</id>
+			<description>Check Status Request ID</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>requestId</alias>
+				<valueType>String</valueType>
+			</attribute>
+			<botResponse>Enter Request ID</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status Request ID</from>
+					<input>String</input>
+					<to>Check Status Complete</to>
+				</transition>
+			</transitions>
+			
+		</state>
+
+		<state>
+			<id>Check Status Complete</id>
+			<description>Check Status Complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>Request ID-</botResponse>
+			<transitions>
+				<transition>
+					<from>Check Status Complete</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>	
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>check status</workflowName>
+			</action>
+		</state>
+
+		<state>
+			<id>Addition First Number</id>
+			<description>Addition First Number</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>param1</alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>Enter First Number</botResponse>
+			<transitions>
+				<transition>
+					<from>Addition First Number</from>
+					<input>Integer</input>
+					<to>Addition Second Number</to>
+				</transition>
+			</transitions>			
+		</state>
+		
+		<state>
+			<id>Addition Second Number</id>
+			<description>Addition Second Number</description>
+			<attribute>
+				<type>ae</type>
+				<name></name>
+				<alias>param2</alias>
+				<valueType>Integer</valueType>
+			</attribute>
+			<botResponse>Enter Second Number</botResponse>
+			<transitions>
+				<transition>
+					<from>Addition Second Number</from>
+					<input>Integer</input>
+					<to>Addition of Two Numbers complete</to>
+				</transition>
+			</transitions>			
+		</state>
+		
+		<state>
+			<id>Addition of Two Numbers complete</id>
+			<description>Addition of Two Numbers complete</description>
+			<attribute>
+				<type>local</type>
+				<name></name>
+				<alias></alias>
+				<valueType></valueType>
+			</attribute>
+			<botResponse>We have received your request. Your request id is- </botResponse>
+			<transitions>
+				<transition>
+					<from>Addition of Two Numbers</from>
+					<input></input>
+					<to>Start</to>
+				</transition>
+			</transitions>
+			
+			<action>
+				<methodType>POST</methodType>
+				<workflowName>Add Two Numbers - Without Scripts</workflowName>
+			</action>
+		</state>
+	</states>
+</stateMachine>
